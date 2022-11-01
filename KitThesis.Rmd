@@ -1,0 +1,223 @@
+---
+title: "KitThesis"
+author: "Changhao Li"
+date: '2022-10-24'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(readr)
+wechat_survey <- read_csv("~/Downloads/wechat-survey.csv")
+wechat_survey
+```
+
+```{r}
+data <- wechat_survey
+data[data==-3] <- NA
+data <- na.omit(data)
+data
+```
+
+## Demographics
+
+```{r}
+summary(data$age)
+sum(data$gender[data$gender==1]) #male
+sum(data$gender[data$gender==2])/2 #female
+dim(data)
+```
+
+```{r}
+sum(data$marriage[data$marriage==1])/1 # single
+sum(data$marriage[data$marriage==2])/2 # married
+sum(data$marriage[data$marriage==3])/3 # died
+sum(data$marriage[data$marriage==4])/4 # divorced
+dim(data)
+```
+
+```{r}
+sum(data$living[data$living==1])/1 # with family
+sum(data$living[data$living==2])/2 # alone
+sum(data$living[data$living==3])/3 # care home
+dim(data)
+```
+
+
+```{r}
+sum(data$education[data$education==1])/1 # primary-
+sum(data$education[data$education==2])/2 # middle
+sum(data$education[data$education==3])/3 # high
+sum(data$education[data$education==4])/4 # bachelor
+sum(data$education[data$education==5])/5 # master+
+dim(data)
+```
+
+```{r}
+sum(data$pension[data$pension==1])/1 # no
+sum(data$pension[data$pension==2])/2 # 0-1000
+sum(data$pension[data$pension==3])/3 # 1000-2000
+sum(data$pension[data$pension==4])/4 # 2001-5000
+sum(data$pension[data$pension==5])/5 # 5001-7000
+sum(data$pension[data$pension==6])/6 # 7001-10000
+sum(data$pension[data$pension==7])/7 # 10000+
+sum(data$pension[data$pension==8])/8 # secret
+dim(data)
+```
+
+```{r}
+sum(data$livingarea[data$livingarea==1])/1 # city
+sum(data$livingarea[data$livingarea==2])/2 # country
+```
+
+
+## Rating
+
+```{r}
+df <- data.frame(data$videocallrate, data$voicecallrate, data$presstospeakrate, data$sendlocationrate, data$recallmessagerate)
+boxplot(df)
+```
+
+```{r}
+library(ggplot2)
+violindata <- data.frame(
+  Functionality=c(rep("Video Call",89),rep("Voice Call",89),rep("Press to Speak",89),rep("Send Location",89),rep("Moments",89)),
+  Score=c(data$videocallrate, data$voicecallrate, data$presstospeakrate, data$sendlocationrate, data$momentsrate),
+  Mean=c(3.752809,3.696629,3.595506,3.348315,3.606742)
+)
+# Basic violin plot
+p <- ggplot(violindata, aes(x=Functionality, y=Score)) + 
+  geom_violin(draw_quantiles=FALSE) + 
+  geom_boxplot(width=0.1) + 
+  #geom_dotplot(binaxis='y', stackdir='center', dotsize=0.2, binwidth=0.15) +
+  geom_jitter(shape=16, position=position_jitter(0.1)) + 
+  scale_color_grey() + 
+  theme_classic() + 
+  theme(axis.text = element_text(size = 10)) +
+  theme(axis.title = element_text(size = 12)) 
+  #geom_point(data = violindata,aes(x=Functionality, y=Mean), size = 0.5)
+p
+ggsave("wechat-rate-box.png", width = 7, height = 5)
+```
+
+```{r}
+mean(data$videocallrate)
+mean(data$voicecallrate)
+mean(data$presstospeakrate)
+mean(data$sendlocationrate)
+mean(data$recallmessagerate)
+mean(data$momentsrate)
+median(data$videocallrate)
+median(data$voicecallrate)
+median(data$presstospeakrate)
+median(data$sendlocationrate)
+median(data$recallmessagerate)
+median(data$momentsrate)
+sd(data$videocallrate)
+sd(data$voicecallrate)
+sd(data$presstospeakrate)
+sd(data$sendlocationrate)
+sd(data$recallmessagerate)
+sd(data$momentsrate)
+```
+
+```{r}
+# creating a data frame df
+score<-data.frame(Mean=c(3.752809,3.696629,3.595506,3.168539,3.606742),
+               sd=c(1.014451,0.9582713,0.9501089,1.013948,0.8609981),
+               Category=c("1. Press to Speak","2. Voice Call","4. Video Call","5. Send Location","3. Moments"),
+               Insert= c(0.0, 0.1, 0.3, 0.5, 1.0))
+  
+# plot the point plot
+library(ggplot2)
+p<-ggplot(score, aes(x=Category, y=Mean)) + 
+  geom_point()+
+  geom_errorbar(aes(ymin=Mean-sd, ymax=Mean+sd), width=.2,
+                position=position_dodge(0.05)) + 
+  scale_color_grey() + 
+  theme_classic() + 
+  theme(axis.text = element_text(size = 10)) +
+  theme(axis.title = element_text(size = 12)) +
+  scale_y_continuous(limits = c(0, 5))
+  
+p
+ggsave("wechat-rate-sd.png", width = 7, height = 5)
+```
+
+```{r}
+
+```
+
+## Frequency
+
+```{r}
+mean(data$videocall)
+mean(data$voicecall)
+mean(data$presstospeak)
+mean(data$sendlocation)
+mean(data$recallmessage)
+mean(data$moments)
+median(data$videocall)
+median(data$voicecall)
+median(data$presstospeak)
+median(data$sendlocation)
+median(data$recallmessage)
+median(data$moments)
+sd(data$videocall)
+sd(data$voicecall)
+sd(data$presstospeak)
+sd(data$sendlocation)
+sd(data$recallmessage)
+sd(data$moments)
+```
+
+```{r}
+# creating a data frame df
+score<-data.frame(Mean=c(3.47191,3.449438,3.078652,2.696629,2.977528),
+               sd=c(1.088054,1.000128,0.8149835,1.037967, 1.08688),
+               Category=c("1. Press to Speak","2. Voice Call","3. Video Call","5. Send Location","4. Moments"),
+               Insert= c(0.0, 0.1, 0.3, 0.5, 1.0))
+  
+# plot the point plot
+library(ggplot2)
+p<-ggplot(score, aes(x=Category, y=Mean)) + 
+  geom_point()+
+  geom_errorbar(aes(ymin=Mean-sd, ymax=Mean+sd), width=.2,
+                position=position_dodge(0.05)) + 
+  scale_color_grey() + 
+  theme_classic() + 
+  theme(axis.text = element_text(size = 10)) +
+  theme(axis.title = element_text(size = 12)) +
+  scale_y_continuous(limits = c(0, 5))
+  
+p
+ggsave("wechat-freq-sd.png", width = 7, height = 5)
+```
+
+## Switch Camera
+
+```{r}
+sum(data$switchcamera[data$switchcamera==1])
+sum(data$switchcamera[data$switchcamera==2])/2
+dim(data)
+```
+
+## Fontsize
+
+```{r}
+sum(data$enlargefontsize[data$enlargefontsize==1])
+sum(data$enlargefontsize[data$enlargefontsize==2])/2
+dim(data)
+```
+
+## 
+
+```{r}
+sum(data$caremode[data$caremode==1])
+sum(data$caremode[data$caremode==2])/2
+dim(data)
+```
+
