@@ -6,7 +6,9 @@ All relevant materials are documented in this GitHub Repository. Feel free to ex
 
 
 ## Supervisor
+
 Professor Judy Kay, University of Sydney
+
 Associate Professor Bob Kummerfeld, University of Sydney
 
 ## Abstract
