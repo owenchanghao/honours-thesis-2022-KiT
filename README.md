@@ -7,9 +7,9 @@ All relevant materials are documented in this GitHub Repository. Feel free to ex
 
 ## Supervisor
 
-Professor Judy Kay, University of Sydney
+Professor [**Judy Kay**](https://jkay-github.github.io/), University of Sydney
 
-Associate Professor Bob Kummerfeld, University of Sydney
+Honorary Associate Professor [**Bob Kummerfeld**](https://www.linkedin.com/in/bob-kummerfeld-808b643/?originalSubdomain=au), University of Sydney
 
 ## Abstract
 During the Covid-19 (or formally, SARS-CoV-2) pandemic that started in late 2019, governments around the globe constantly deployed local, neighborhood-wide lockdown or self-isolation measures to prevent the spread of the virus. One of the consequences is that elders might be forced into situations where they have to live separately from their children during the lockdown or self-isolation period. During this period, elders' daily activities might be seriously affected, including the loss of face-to-face chat opportunities with family and friends. This means that elders are pushed to live online and adapt to the use of social media. Therefore, a well-designed application with good usability design and HCI experience would be valuable to the elders.
